@@ -47,7 +47,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # (devcontainer.json only adds editor-side settings).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        sudo ca-certificates curl git gh \
+        sudo ca-certificates curl git gh openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 # ubuntu:24.04 ships a default `ubuntu` user (uid 1000, already in the sudo
