@@ -1,0 +1,31 @@
+{
+  "name": "Production RAG System",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+  // SSH: no manual mounts. The Dev Containers extension automatically
+  // forwards the local SSH agent when one is running (and does nothing
+  // when there is none), so the container starts with or without one.
+  "remoteUser": "ubuntu",
+  // Restore the environment on (re)build: interpreter + lockfile
+  "postCreateCommand": "uv sync",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "tamasfe.even-better-toml"
+      ],
+      "settings": {
+        // Let the integrated terminal inherit the server process environment:
+        // required to see the automatically forwarded SSH_AUTH_SOCK, so
+        // `git push` over SSH works from the terminal. Same fix as in sinergym.
+        "terminal.integrated.inheritEnv": true,
+        "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+        "python.terminal.activateEnvironment": false
+      }
+    }
+  }
+}
