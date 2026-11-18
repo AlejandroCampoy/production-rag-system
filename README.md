@@ -42,7 +42,7 @@ This is not a demo: the goal is an **evolvable, production-grade system** — ev
 
 ## 3. Pipeline / architecture
 
-The system is split into two flows: an **offline ingestion flow** (run whenever documents change) and an **online query flow** (per user request). Conceptual diagrams of both flows will be added to this section (see [Planned diagrams](#planned-diagrams)).
+The system is split into two flows: an **offline ingestion flow** (run whenever documents change) and an **online query flow** (per user request). Conceptual diagrams of both flows will be added to this section (see [Planned diagrams](#6-planned-diagrams)).
 
 ### Ingestion pipeline (offline)
 
@@ -88,7 +88,33 @@ User question (API)
 - Retrieval quality decides answer quality, which is why the roadmap invests early in chunking/metadata (V2) and later in hybrid search + reranking (V3).
 - References are a first-class output, not an afterthought: every answer must be traceable to its source.
 
-## 4. Roadmap — evolution by phases
+## 4. Project layout
+
+```
+production-rag-system/
+├── src/production_rag_system/   # the package: everything that ships
+│   ├── config.py                # settings (provider, model, endpoint) — anti-lock-in lives here
+│   ├── ingest/                  # extraction, chunking, embedding        (MVP)
+│   ├── query/                   # retrieval, context building, LLM       (MVP)
+│   ├── db/                      # PostgreSQL/pgvector access layer       (MVP)
+│   ├── api/                     # FastAPI app                            (MVP)
+│   └── eval/                    # Ragas evaluation harness               (V4)
+├── tests/                       # tests mirror the package layout
+├── docs/                        # project documentation (MkDocs + Material)
+├── pyproject.toml               # uv project; dependencies arrive per phase
+├── uv.lock
+├── mkdocs.yml                   # documentation site configuration
+├── Dockerfile                   # devcontainer image (multi-stage)
+└── .devcontainer/               # editor-side adapter for the image
+```
+
+- `src/` contains only the package folder: what is in there is exactly what
+  is built and installed — tests are imported against the installed artifact.
+- Subpackages are created when their phase begins, not before.
+- Full documentation lives in `docs/` (built with MkDocs + Material; preview
+  with `uv run mkdocs serve`). This README is just the front door.
+
+## 5. Roadmap — evolution by phases
 
 | Phase | Goal |
 | ----- | ---- |
@@ -106,7 +132,7 @@ Details:
 - **V4** — evaluation harness with Ragas: golden question sets, regression tracking of retrieval and answer quality.
 - **V5** — Langfuse tracing of every step, cost tracking per provider, and production deployment (Docker Compose).
 
-## Planned diagrams
+## 6. Planned diagrams
 
 Conceptual diagrams to be added to Section 3 (architecture/pipeline):
 
