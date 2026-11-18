@@ -42,10 +42,12 @@ FROM ubuntu:24.04 AS development
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Devcontainer runtime essentials only.
+# Devcontainer runtime essentials only. git and gh are installed here on
+# purpose: the image is self-contained, usable with or without VS Code
+# (devcontainer.json only adds editor-side settings).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        sudo ca-certificates curl git \
+        sudo ca-certificates curl git gh \
     && rm -rf /var/lib/apt/lists/*
 
 # ubuntu:24.04 ships a default `ubuntu` user (uid 1000, already in the sudo
