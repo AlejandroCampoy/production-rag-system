@@ -12,7 +12,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    # Tooling as needed (pytest, ruff, ...).
+    # Documentation
+    "mkdocs-material>=9.8.1",
+    # Testing
     "pytest>=9.2.0",
 ]
 
