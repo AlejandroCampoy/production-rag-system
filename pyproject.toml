@@ -13,6 +13,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     # Tooling as needed (pytest, ruff, ...).
+    "pytest>=9.2.0",
 ]
 
 [tool.uv]
@@ -23,4 +24,8 @@ package = true
 requires = ["uv_build>=0.13,<1"]
 build-backend = "uv_build"
 
-# Tool configurations (ruff, pytest, ...) will be added here as they are adopted.
+[tool.pytest.ini_options]
+# Keep tests at the repo root, outside the package: not shipped in the wheel.
+testpaths = ["tests"]
+
+# Tool configurations (ruff, ...) will be added here as they are adopted.
