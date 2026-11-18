@@ -100,8 +100,10 @@ production-rag-system/
 │   ├── api/                     # FastAPI app                            (MVP)
 │   └── eval/                    # Ragas evaluation harness               (V4)
 ├── tests/                       # tests mirror the package layout
+├── docs/                        # project documentation (MkDocs + Material)
 ├── pyproject.toml               # uv project; dependencies arrive per phase
 ├── uv.lock
+├── mkdocs.yml                   # documentation site configuration
 ├── Dockerfile                   # devcontainer image (multi-stage)
 └── .devcontainer/               # editor-side adapter for the image
 ```
@@ -109,6 +111,8 @@ production-rag-system/
 - `src/` contains only the package folder: what is in there is exactly what
   is built and installed — tests are imported against the installed artifact.
 - Subpackages are created when their phase begins, not before.
+- Full documentation lives in `docs/` (built with MkDocs + Material; preview
+  with `uv run mkdocs serve`). This README is just the front door.
 
 ## 5. Roadmap — evolution by phases
 
